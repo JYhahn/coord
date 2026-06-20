@@ -245,13 +245,25 @@ function parseInput(s){
   return [lat,lon];
 }
 function convert(){
-  const err=$('parseErr');err.style.display='none';
+  const err=$('parseErr');
+  err.style.display='none';
+  
   const p=parseInput($('coord').value);
-  if(!p){err.textContent='좌표를 인식할 수 없습니다. 예: 37.95676, 128.31752';err.style.display='block';return;}
-  const [lat,lon]=p;lastLat=lat;lastLon=lon;
-  const m1=toMGRS(lat,lon,5),m10=toMGRS(lat,lon,4),m100=toMGRS(lat,lon,3);
+  
+  if(!p){
+    err.textContent='좌표를 인식할 수 없습니다. 예: 37.95676, 128.31752';
+    err.style.display='block';
+    return;
+  }
+  
+  const [lat,lon]=p;
+  lastLat=lat;
+  lastLon=lon;
+
+  /* 대표 mgrs 값만 계산 */
+  const m1=toMGRS(lat,lon,5);
   $('mgrsMain').textContent=fmtMGRS(m1,true);
-  $('m1').textContent=fmtMGRS(m1,false);$('m10').textContent=fmtMGRS(m10,false);$('m100').textContent=fmtMGRS(m100,false);
+  
   const u=m1.utm;
   $('utm').textContent=`${u.zoneNumber}${u.zoneLetter} ${Math.round(u.easting)}E ${Math.round(u.northing)}N`;
   $('dmsLat').textContent=toDMS(lat,true);$('dmsLon').textContent=toDMS(lon,false);$('dec').textContent=`${lat.toFixed(6)}, ${lon.toFixed(6)}`;
