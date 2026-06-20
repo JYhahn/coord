@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#0d1411">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="좌표">
+<meta name="apple-mobile-web-app-title" content="ì¢í">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230d1411'/%3E%3Ccircle cx='90' cy='90' r='52' fill='none' stroke='%23223229' stroke-width='6'/%3E%3Ccircle cx='90' cy='90' r='32' fill='none' stroke='%23223229' stroke-width='4'/%3E%3Cpath d='M90 34 L102 90 L90 146 L78 90 Z' fill='%23f2b441'/%3E%3Ccircle cx='90' cy='90' r='6' fill='%230d1411' stroke='%23f2b441' stroke-width='3'/%3E%3C/svg%3E">
-<title>좌표 변환기 · MGRS / 주소</title>
+<title>ì¢í ë³íê¸° Â· MGRS / ì£¼ì</title>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <style>
 @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/space-grotesk/2.0.0/fonts/SpaceGrotesk-Variable.woff2) format('woff2');}
@@ -45,12 +45,12 @@ button:active{transform:scale(.97)}
 .btn-sm:hover{border-color:var(--amber)}
 .screen{background:var(--screen);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative;overflow:hidden}
 .screen::after{content:'';position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,rgba(242,180,65,.07),transparent 60%);pointer-events:none}
-.mgrs-main{font-family:'JetBrains Mono',monospace;font-size:clamp(20px,6.4vw,28px);font-weight:700;color:var(--amber);letter-spacing:.06em;word-break:break-all;text-shadow:0 0 18px rgba(242,180,65,.28);position:relative;z-index:1}
+.mgrs-main{font-family:'JetBrains Mono',monospace;font-size:clamp(16px,4.7vw,28px);font-weight:700;color:var(--amber);letter-spacing:.02em;white-space:nowrap;word-break:normal;overflow-x:auto;-webkit-overflow-scrolling:touch;text-shadow:0 0 18px rgba(242,180,65,.28);position:relative;z-index:1}
 .mgrs-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
 .mgrs-row:last-child{border-bottom:none;padding-bottom:0}
 .mgrs-row:first-of-type{padding-top:14px}
 .mgrs-prec{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);flex:0 0 auto;width:42px}
-.mgrs-val{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--txt);flex:1;word-break:break-all;letter-spacing:.04em}
+.mgrs-val{font-family:'JetBrains Mono',monospace;font-size:clamp(11px,3.4vw,14px);color:var(--txt);flex:1;min-width:0;white-space:nowrap;word-break:normal;letter-spacing:.01em;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .copy{background:transparent;border:1px solid var(--line);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:7px 10px;border-radius:8px;flex:0 0 auto}
 .copy:hover{border-color:var(--amber);color:var(--amber)}
 .copy.ok{color:var(--teal);border-color:var(--teal)}
@@ -75,11 +75,15 @@ button:active{transform:scale(.97)}
 .keyrow{display:flex;gap:10px;margin-top:4px}
 .keyrow input{flex:1}
 .err{color:var(--danger);font-size:13px}
+@media (max-width:430px){
+  .mgrs-main{font-size:clamp(15px,4.5vw,19px);letter-spacing:0}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
+
 
   <header class="hero">
     <svg class="topo" viewBox="0 0 500 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -91,80 +95,89 @@ button:active{transform:scale(.97)}
       </g>
     </svg>
     <div class="hero-inner">
-      <div class="eyebrow">GEO · 좌표 변환기</div>
-      <h1 class="title">위도·경도 → MGRS · 주소</h1>
-      <p class="subtitle">MGRS는 오프라인에서 정확하게. 한국 주소는 카카오맵이 도로명·지번까지 바로 반환합니다.</p>
+      <div class="eyebrow">GEO Â· ì¢í ë³íê¸°</div>
+      <h1 class="title">ìëÂ·ê²½ë â MGRS Â· ì£¼ì</h1>
+      <p class="subtitle">MGRSë ì¤íë¼ì¸ìì ì ííê². íêµ­ ì£¼ìë ì¹´ì¹´ì¤ë§µì´ ëë¡ëªÂ·ì§ë²ê¹ì§ ë°ë¡ ë°íí©ëë¤.</p>
     </div>
   </header>
 
+
   <section class="card">
-    <div class="label">좌표 입력</div>
+    <div class="label">ì¢í ìë ¥</div>
     <div class="field">
-      <input id="coord" type="text" inputmode="decimal" autocomplete="off" placeholder="예: 37.95676408, 128.31752415" value="37.95676408, 128.31752415">
+      <input id="coord" type="text" inputmode="decimal" autocomplete="off" placeholder="ì: 37.95676408, 128.31752415" value="37.95676408, 128.31752415">
     </div>
     <div class="btns">
-      <button class="btn-primary" id="convert">변환</button>
-      <button class="btn-ghost" id="gps" title="현재 위치">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>현재 위치
+      <button class="btn-primary" id="convert">ë³í</button>
+      <button class="btn-ghost" id="gps" title="íì¬ ìì¹">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>íì¬ ìì¹
       </button>
     </div>
     <div id="parseErr" class="err" style="margin-top:10px;display:none"></div>
   </section>
 
+
   <section class="card">
     <div class="label">MGRS</div>
     <div class="screen">
-      <div class="mgrs-main" id="mgrsMain">—</div>
-      <div class="mgrs-row"><span class="mgrs-prec">1m</span><span class="mgrs-val" id="m1">—</span><button class="copy" data-t="m1">복사</button></div>
-      <div class="mgrs-row"><span class="mgrs-prec">10m</span><span class="mgrs-val" id="m10">—</span><button class="copy" data-t="m10">복사</button></div>
-      <div class="mgrs-row"><span class="mgrs-prec">100m</span><span class="mgrs-val" id="m100">—</span><button class="copy" data-t="m100">복사</button></div>
+      <div class="mgrs-main" id="mgrsMain">â</div>
+      <div class="mgrs-row"><span class="mgrs-prec">1m</span><span class="mgrs-val" id="m1">â</span><button class="copy" data-t="m1">ë³µì¬</button></div>
+      <div class="mgrs-row"><span class="mgrs-prec">10m</span><span class="mgrs-val" id="m10">â</span><button class="copy" data-t="m10">ë³µì¬</button></div>
+      <div class="mgrs-row"><span class="mgrs-prec">100m</span><span class="mgrs-val" id="m100">â</span><button class="copy" data-t="m100">ë³µì¬</button></div>
     </div>
   </section>
 
+
   <section class="card">
-    <div class="label">주소 <span class="stat off" id="kakaoStat">카카오 미연결</span></div>
+    <div class="label">ì£¼ì <span class="stat off" id="kakaoStat">ì¹´ì¹´ì¤ ë¯¸ì°ê²°</span></div>
     <div id="addrKakao" style="display:none">
-      <div class="addr-line"><span class="addr-k">도로명</span><span class="addr-v" id="addrRoad">—</span><button class="copy" data-t="addrRoad">복사</button></div>
-      <div class="addr-line"><span class="addr-k">지번</span><span class="addr-v" id="addrJibun">—</span><button class="copy" data-t="addrJibun">복사</button></div>
-      <div class="addr-line"><span class="addr-k">행정동</span><span class="addr-v dim" id="addrRegion">—</span></div>
+      <div class="addr-line"><span class="addr-k">ëë¡ëª</span><span class="addr-v" id="addrRoad">â</span><button class="copy" data-t="addrRoad">ë³µì¬</button></div>
+      <div class="addr-line"><span class="addr-k">ì§ë²</span><span class="addr-v" id="addrJibun">â</span><button class="copy" data-t="addrJibun">ë³µì¬</button></div>
+      <div class="addr-line"><span class="addr-k">íì ë</span><span class="addr-v dim" id="addrRegion">â</span></div>
     </div>
-    <div class="addr-line" id="addrApproxWrap"><span class="addr-k">대략</span><span class="addr-v dim" id="addrApprox">변환을 누르세요</span></div>
-    <p class="addr-hint" id="addrHint">카카오 키를 연결하면 도로명·지번 주소가 여기에 바로 표시됩니다. 키가 없을 땐 아래 지도에서 핀을 눌러 확인하세요.</p>
+    <div class="addr-line" id="addrApproxWrap"><span class="addr-k">ëëµ</span><span class="addr-v dim" id="addrApprox">ë³íì ëë¥´ì¸ì</span></div>
+    <p class="addr-hint" id="addrHint">ì¹´ì¹´ì¤ í¤ë¥¼ ì°ê²°íë©´ ëë¡ëªÂ·ì§ë² ì£¼ìê° ì¬ê¸°ì ë°ë¡ íìë©ëë¤. í¤ê° ìì ë ìë ì§ëìì íì ëë¬ íì¸íì¸ì.</p>
     <div class="maplinks">
-      <a class="maplink full" id="mApple" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#d6d6d6"></span>애플 지도에서 보기</a>
-      <a class="maplink" id="mKakao" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#fae100"></span>카카오맵</a>
+      <a class="maplink full" id="mApple" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#d6d6d6"></span>ì í ì§ëìì ë³´ê¸°</a>
+      <a class="maplink" id="mKakao" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#fae100"></span>ì¹´ì¹´ì¤ë§µ</a>
       <a class="maplink" id="mGoogle" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#4285f4"></span>Google</a>
     </div>
   </section>
 
-  <section class="card">
-    <div class="label">추가 좌표계</div>
-    <div class="aux-row"><span class="aux-k">UTM</span><span class="aux-v" id="utm">—</span></div>
-    <div class="aux-row"><span class="aux-k">위도 DMS</span><span class="aux-v" id="dmsLat">—</span></div>
-    <div class="aux-row"><span class="aux-k">경도 DMS</span><span class="aux-v" id="dmsLon">—</span></div>
-    <div class="aux-row"><span class="aux-k">10진수</span><span class="aux-v" id="dec">—</span></div>
-  </section>
 
   <section class="card">
-    <div class="label">카카오 API 키</div>
-    <div class="keyrow">
-      <input id="kakaoKey" type="text" autocomplete="off" placeholder="JavaScript 키 붙여넣기">
-      <button class="btn-sm" id="saveKey">연결</button>
-    </div>
-    <p class="addr-hint" style="margin-bottom:0">발급한 <b style="color:var(--amber-soft)">JavaScript 키</b>를 넣고 연결을 누르세요. 영구 적용하려면 파일 상단 <code>KAKAO_JS_KEY</code> 값을 직접 채워도 됩니다. 키는 등록한 도메인에서만 동작하므로 노출돼도 안전합니다.</p>
+    <div class="label">ì¶ê° ì¢íê³</div>
+    <div class="aux-row"><span class="aux-k">UTM</span><span class="aux-v" id="utm">â</span></div>
+    <div class="aux-row"><span class="aux-k">ìë DMS</span><span class="aux-v" id="dmsLat">â</span></div>
+    <div class="aux-row"><span class="aux-k">ê²½ë DMS</span><span class="aux-v" id="dmsLon">â</span></div>
+    <div class="aux-row"><span class="aux-k">10ì§ì</span><span class="aux-v" id="dec">â</span></div>
   </section>
+
+
+  <section class="card">
+    <div class="label">ì¹´ì¹´ì¤ API í¤</div>
+    <div class="keyrow">
+      <input id="kakaoKey" type="text" autocomplete="off" placeholder="JavaScript í¤ ë¶ì¬ë£ê¸°">
+      <button class="btn-sm" id="saveKey">ì°ê²°</button>
+    </div>
+    <p class="addr-hint" style="margin-bottom:0">ë°ê¸í <b style="color:var(--amber-soft)">JavaScript í¤</b>ë¥¼ ë£ê³  ì°ê²°ì ëë¥´ì¸ì. ìêµ¬ ì ì©íë ¤ë©´ íì¼ ìë¨ <code>KAKAO_JS_KEY</code> ê°ì ì§ì  ì±ìë ë©ëë¤. í¤ë ë±ë¡í ëë©ì¸ììë§ ëìíë¯ë¡ ë¸ì¶ë¼ë ìì í©ëë¤.</p>
+  </section>
+
 
   <div class="note">
-    <b>아이폰에서 앱처럼 쓰기</b><br>
-    이 파일을 GitHub Pages 등 <b>등록한 도메인</b>에 올린 뒤 Safari로 열고 → 공유 <code>􀈂</code> → <b>홈 화면에 추가</b>. 카카오 주소 변환은 등록 도메인에서만 동작합니다. (MGRS·좌표 변환은 도메인·인터넷 없이도 항상 정확합니다.)
+    <b>ìì´í°ìì ì±ì²ë¼ ì°ê¸°</b><br>
+    ì´ íì¼ì GitHub Pages ë± <b>ë±ë¡í ëë©ì¸</b>ì ì¬ë¦° ë¤ Safarië¡ ì´ê³  â ê³µì  <code>ô</code> â <b>í íë©´ì ì¶ê°</b>. ì¹´ì¹´ì¤ ì£¼ì ë³íì ë±ë¡ ëë©ì¸ììë§ ëìí©ëë¤. (MGRSÂ·ì¢í ë³íì ëë©ì¸Â·ì¸í°ë· ìì´ë í­ì ì íí©ëë¤.)
   </div>
+
 
 </div>
 
+
 <script>
-/* ====== 영구 적용용: 여기에 카카오 JavaScript 키를 넣으면 매번 입력 안 해도 됩니다 ====== */
+/* ====== ìêµ¬ ì ì©ì©: ì¬ê¸°ì ì¹´ì¹´ì¤ JavaScript í¤ë¥¼ ë£ì¼ë©´ ë§¤ë² ìë ¥ ì í´ë ë©ëë¤ ====== */
 const KAKAO_JS_KEY = "82ecd24fe8231da185d62b03bd26b2fa";
 /* ============================================================================= */
+
 
 const A=65,I=73,O=79,V=86,Z=90, d2r=d=>d*Math.PI/180;
 function llToUTM(lat,lon){
@@ -203,7 +216,8 @@ function toMGRS(lat,lon,acc){
   return {zone:''+u.zoneNumber+u.zoneLetter,sq:L,e:se,n:sn,utm:u};
 }
 const fmtMGRS=(m,sp)=>sp?`${m.zone} ${m.sq} ${m.e} ${m.n}`:`${m.zone}${m.sq}${m.e}${m.n}`;
-function toDMS(v,isLat){const hemi=isLat?(v>=0?'N':'S'):(v>=0?'E':'W');v=Math.abs(v);const deg=Math.floor(v),mf=(v-deg)*60,min=Math.floor(mf),sec=(mf-min)*60;return `${deg}°${String(min).padStart(2,'0')}′${sec.toFixed(2)}″${hemi}`;}
+function toDMS(v,isLat){const hemi=isLat?(v>=0?'N':'S'):(v>=0?'E':'W');v=Math.abs(v);const deg=Math.floor(v),mf=(v-deg)*60,min=Math.floor(mf),sec=(mf-min)*60;return `${deg}Â°${String(min).padStart(2,'0')}â²${sec.toFixed(2)}â³${hemi}`;}
+
 
 let geocoder=null, kakaoReady=false, kakaoLoading=false;
 const $=id=>document.getElementById(id);
@@ -239,6 +253,7 @@ function kakaoAddress(lat,lon){
   });
 }
 
+
 let lastLat=null,lastLon=null;
 function parseInput(s){
   if(!s)return null;
@@ -251,7 +266,7 @@ function parseInput(s){
 function convert(){
   const err=$('parseErr');err.style.display='none';
   const p=parseInput($('coord').value);
-  if(!p){err.textContent='좌표를 인식할 수 없습니다. 예: 37.95676, 128.31752';err.style.display='block';return;}
+  if(!p){err.textContent='ì¢íë¥¼ ì¸ìí  ì ììµëë¤. ì: 37.95676, 128.31752';err.style.display='block';return;}
   const [lat,lon]=p;lastLat=lat;lastLon=lon;
   const m1=toMGRS(lat,lon,5),m10=toMGRS(lat,lon,4),m100=toMGRS(lat,lon,3);
   $('mgrsMain').textContent=fmtMGRS(m1,true);
@@ -259,8 +274,8 @@ function convert(){
   const u=m1.utm;
   $('utm').textContent=`${u.zoneNumber}${u.zoneLetter} ${Math.round(u.easting)}E ${Math.round(u.northing)}N`;
   $('dmsLat').textContent=toDMS(lat,true);$('dmsLon').textContent=toDMS(lon,false);$('dec').textContent=`${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-  $('mApple').href=`https://maps.apple.com/?ll=${lat},${lon}&q=${encodeURIComponent('선택 좌표')}&z=17`;
-  $('mKakao').href=`https://map.kakao.com/link/map/${encodeURIComponent('선택 좌표')},${lat},${lon}`;
+  $('mApple').href=`https://maps.apple.com/?ll=${lat},${lon}&q=${encodeURIComponent('ì í ì¢í')}&z=17`;
+  $('mKakao').href=`https://map.kakao.com/link/map/${encodeURIComponent('ì í ì¢í')},${lat},${lon}`;
   $('mGoogle').href=`https://www.google.com/maps/search/?api=1&query=${lat}%2C${lon}`;
   resolveAddress(lat,lon);
 }
@@ -272,46 +287,46 @@ async function resolveAddress(lat,lon){
       const a=await kakaoAddress(lat,lon);
       if(a.road||a.jibun){
         $('addrKakao').style.display='block';$('addrApproxWrap').style.display='none';
-        $('addrRoad').textContent=a.road||'(도로명 없음)';
-        $('addrJibun').textContent=a.jibun||'(지번 없음)';
-        $('addrRegion').textContent=a.region||'—';
-        $('addrHint').textContent='카카오맵 기준 도로명·지번 주소입니다.';
-        setKakaoStat('on','카카오 연결됨');return;
+        $('addrRoad').textContent=a.road||'(ëë¡ëª ìì)';
+        $('addrJibun').textContent=a.jibun||'(ì§ë² ìì)';
+        $('addrRegion').textContent=a.region||'â';
+        $('addrHint').textContent='ì¹´ì¹´ì¤ë§µ ê¸°ì¤ ëë¡ëªÂ·ì§ë² ì£¼ììëë¤.';
+        setKakaoStat('on','ì¹´ì¹´ì¤ ì°ê²°ë¨');return;
       }else{
-        setKakaoStat('on','카카오 연결됨');
+        setKakaoStat('on','ì¹´ì¹´ì¤ ì°ê²°ë¨');
         $('addrKakao').style.display='none';$('addrApproxWrap').style.display='flex';
-        $('addrApprox').textContent='이 좌표는 카카오 주소 범위를 벗어납니다 (국내 아님)';
+        $('addrApprox').textContent='ì´ ì¢íë ì¹´ì¹´ì¤ ì£¼ì ë²ìë¥¼ ë²ì´ë©ëë¤ (êµ­ë´ ìë)';
         approxFallback(lat,lon);return;
       }
     }catch(e){
-      setKakaoStat('off','카카오 미연결');
-      $('addrHint').textContent='카카오 연결 실패 — 키 또는 도메인 등록을 확인하세요. 우선 아래 지도로 확인 가능합니다.';
+      setKakaoStat('off','ì¹´ì¹´ì¤ ë¯¸ì°ê²°');
+      $('addrHint').textContent='ì¹´ì¹´ì¤ ì°ê²° ì¤í¨ â í¤ ëë ëë©ì¸ ë±ë¡ì íì¸íì¸ì. ì°ì  ìë ì§ëë¡ íì¸ ê°ë¥í©ëë¤.';
     }
   }
   $('addrKakao').style.display='none';$('addrApproxWrap').style.display='flex';
   approxFallback(lat,lon);
 }
 async function approxFallback(lat,lon){
-  const box=$('addrApprox');box.textContent='대략 주소 확인 중…';
+  const box=$('addrApprox');box.textContent='ëëµ ì£¼ì íì¸ ì¤â¦';
   try{
     const ctrl=new AbortController();const t=setTimeout(()=>ctrl.abort(),8000);
     const r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`,{signal:ctrl.signal});
     clearTimeout(t);const d=await r.json();
     const seen=new Set();const txt=[d.principalSubdivision,d.city,d.locality].filter(Boolean).filter(p=>{if(seen.has(p))return false;seen.add(p);return true;}).join(' ');
-    box.textContent=txt||'아래 지도에서 확인하세요';
-  }catch(e){box.textContent='아래 지도 버튼으로 확인하세요';}
+    box.textContent=txt||'ìë ì§ëìì íì¸íì¸ì';
+  }catch(e){box.textContent='ìë ì§ë ë²í¼ì¼ë¡ íì¸íì¸ì';}
 }
 function useGPS(){
-  if(!navigator.geolocation){$('parseErr').textContent='이 기기는 위치 기능을 지원하지 않습니다.';$('parseErr').style.display='block';return;}
-  const btn=$('gps'),orig=btn.innerHTML;btn.textContent='측위 중…';
+  if(!navigator.geolocation){$('parseErr').textContent='ì´ ê¸°ê¸°ë ìì¹ ê¸°ë¥ì ì§ìíì§ ììµëë¤.';$('parseErr').style.display='block';return;}
+  const btn=$('gps'),orig=btn.innerHTML;btn.textContent='ì¸¡ì ì¤â¦';
   navigator.geolocation.getCurrentPosition(
     pos=>{$('coord').value=`${pos.coords.latitude.toFixed(8)}, ${pos.coords.longitude.toFixed(8)}`;btn.innerHTML=orig;convert();},
-    e=>{btn.innerHTML=orig;$('parseErr').textContent='위치를 가져오지 못했습니다. 위치 권한을 허용해 주세요.';$('parseErr').style.display='block';},
+    e=>{btn.innerHTML=orig;$('parseErr').textContent='ìì¹ë¥¼ ê°ì ¸ì¤ì§ ëª»íìµëë¤. ìì¹ ê¶íì íì©í´ ì£¼ì¸ì.';$('parseErr').style.display='block';},
     {enableHighAccuracy:true,timeout:10000,maximumAge:0});
 }
 async function copyText(t,btn){
   try{await navigator.clipboard.writeText(t);}catch(e){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}
-  const o=btn.textContent;btn.textContent='완료';btn.classList.add('ok');setTimeout(()=>{btn.textContent=o;btn.classList.remove('ok');},1200);
+  const o=btn.textContent;btn.textContent='ìë£';btn.classList.add('ok');setTimeout(()=>{btn.textContent=o;btn.classList.remove('ok');},1200);
 }
 $('convert').addEventListener('click',convert);
 $('gps').addEventListener('click',useGPS);
