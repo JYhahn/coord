@@ -93,7 +93,6 @@ button:active{transform:scale(.97)}
     <div class="hero-inner">
       <div class="eyebrow">GEO · 좌표 변환기</div>
       <h1 class="title">위도·경도 → MGRS · 주소</h1>
-      <p class="subtitle">MGRS는 오프라인에서 정확하게. 한국 주소는 카카오맵이 도로명·지번까지 바로 반환합니다.</p>
     </div>
   </header>
 
@@ -111,14 +110,19 @@ button:active{transform:scale(.97)}
     <div id="parseErr" class="err" style="margin-top:10px;display:none"></div>
   </section>
 
-<section class="card">
-  <div class="label">MGRS</div>
+  <section class="card">
+    <div class="label">카카오 API 키</div>
+    <button class="btn-sm" id="saveKey">연결</button>
+  </section>
+  
+  <section class="card">
+    <div class="label">MGRS</div>
 
-  <div class="screen">
-    <div class="mgrs-main-row">
-      <div class="mgrs-main" id="mgrsMain">-</div>
-      <button class="copy" data-t="mgrsMain">복사</button>
-    </div>
+    <div class="screen">
+      <div class="mgrs-main-row">
+        <div class="mgrs-main" id="mgrsMain">-</div>
+        <button class="copy" data-t="mgrsMain">복사</button>
+      </div>
     </div>
   </section>
 
@@ -144,15 +148,6 @@ button:active{transform:scale(.97)}
     <div class="aux-row"><span class="aux-k">위도 DMS</span><span class="aux-v" id="dmsLat">—</span></div>
     <div class="aux-row"><span class="aux-k">경도 DMS</span><span class="aux-v" id="dmsLon">—</span></div>
     <div class="aux-row"><span class="aux-k">10진수</span><span class="aux-v" id="dec">—</span></div>
-  </section>
-
-  <section class="card">
-    <div class="label">카카오 API 키</div>
-    <div class="keyrow">
-      <input id="kakaoKey" type="text" autocomplete="off" placeholder="JavaScript 키 붙여넣기">
-      <button class="btn-sm" id="saveKey">연결</button>
-    </div>
-    <p class="addr-hint" style="margin-bottom:0">발급한 <b style="color:var(--amber-soft)">JavaScript 키</b>를 넣고 연결을 누르세요. 영구 적용하려면 파일 상단 <code>KAKAO_JS_KEY</code> 값을 직접 채워도 됩니다. 키는 등록한 도메인에서만 동작하므로 노출돼도 안전합니다.</p>
   </section>
 
   <div class="note">
@@ -266,7 +261,7 @@ function convert(){
   resolveAddress(lat,lon);
 }
 async function resolveAddress(lat,lon){
-  const key=$('kakaoKey').value.trim()||KAKAO_JS_KEY;
+  const KAKAO_JS_KEY;
   if(key){
     try{
       await ensureKakao(key);
@@ -319,7 +314,6 @@ $('gps').addEventListener('click',useGPS);
 $('coord').addEventListener('keydown',e=>{if(e.key==='Enter')convert();});
 $('saveKey').addEventListener('click',()=>{ kakaoReady=false;geocoder=null; if(lastLat!=null)resolveAddress(lastLat,lastLon); });
 document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>copyText($(b.dataset.t).textContent,b)));
-if(KAKAO_JS_KEY)$('kakaoKey').value=KAKAO_JS_KEY;
 convert();
 </script>
 </body>
