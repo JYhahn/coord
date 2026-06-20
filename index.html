@@ -142,7 +142,6 @@ button:active{transform:scale(.97)}
         inputmode="decimal" 
         autocomplete="off" 
         placeholder="예: 37.95676408, 128.31752415" 
-        value="37.95676408, 128.31752415"
       >
       <button
         type="button"
@@ -421,7 +420,7 @@ $('coord').addEventListener('keydown',e=>{if(e.key==='Enter')convert();});
 $('saveKey').addEventListener('click',()=>{ kakaoReady=false;geocoder=null; if(lastLat!=null)resolveAddress(lastLat,lastLon); });
 document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>copyText($(b.dataset.t).textContent,b)));
 syncClearButton();
-convert();
+resetConvertedView();
 </script>
 </body>
 </html>
