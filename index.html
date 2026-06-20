@@ -120,8 +120,8 @@ button:active{transform:scale(.97)}
 
     <div class="screen">
       <div class="mgrs-main-row">
-        <div class="mgrs-main" id="mgrsMain">-</div>
-        <button class="copy" data-t="mgrsMain">복사</button>
+        <div class="mgrs-main" id="mgrsMain">-
+        <button class="copy" data-t="mgrsMain">복사</button></div>
       </div>
     </div>
   </section>
@@ -261,7 +261,7 @@ function convert(){
   resolveAddress(lat,lon);
 }
 async function resolveAddress(lat,lon){
-  const KAKAO_JS_KEY;
+  const key = KAKAO_JS_KEY;
   if(key){
     try{
       await ensureKakao(key);
